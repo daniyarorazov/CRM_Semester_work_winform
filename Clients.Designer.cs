@@ -39,6 +39,8 @@
             this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contact_person = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.register_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.last_contact = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -107,7 +109,7 @@
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.company, this.email, this.contact_person, this.phone });
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.company, this.email, this.contact_person, this.phone, this.register_date, this.last_contact });
             this.dataGridView1.Location = new System.Drawing.Point(0, 129);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
@@ -147,6 +149,16 @@
             this.phone.Name = "phone";
             this.phone.Width = 200;
             // 
+            // register_date
+            // 
+            this.register_date.HeaderText = "Register Date";
+            this.register_date.Name = "register_date";
+            // 
+            // last_contact
+            // 
+            this.last_contact.HeaderText = "Last contact";
+            this.last_contact.Name = "last_contact";
+            // 
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.White;
@@ -166,6 +178,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "New client";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Clients
             // 
@@ -185,6 +198,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn register_date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn last_contact;
 
         private System.Windows.Forms.Button button1;
 

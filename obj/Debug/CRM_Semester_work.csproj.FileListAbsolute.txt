@@ -11,3 +11,12 @@ C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Sem
 C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Clients.resources
 C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Sales.resources
 C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Storage.resources
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\EPPlus.dll
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\EPPlus.xml
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.csproj.CopyComplete
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.MyModalForm.resources
