@@ -1,0 +1,13 @@
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\CRM_Semester_work.exe.config
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\CRM_Semester_work.exe
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\bin\Debug\CRM_Semester_work.pdb
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Properties.Resources.resources
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.csproj.GenerateResource.cache
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.exe
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.pdb
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Clients.resources
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Sales.resources
+C:\Users\user\source\repos\CRM_Semester_work\CRM_Semester_work\obj\Debug\CRM_Semester_work.Storage.resources
