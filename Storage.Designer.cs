@@ -36,13 +36,14 @@ namespace CRM_Semester_work
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contact_person = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
-            this.company = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -106,27 +107,6 @@ namespace CRM_Semester_work
             this.label1.TabIndex = 0;
             this.label1.Text = "CRM";
             // 
-            // email
-            // 
-            this.email.HeaderText = "Email";
-            this.email.MinimumWidth = 200;
-            this.email.Name = "email";
-            this.email.Width = 200;
-            // 
-            // contact_person
-            // 
-            this.contact_person.HeaderText = "Contact Person";
-            this.contact_person.MinimumWidth = 200;
-            this.contact_person.Name = "contact_person";
-            this.contact_person.Width = 200;
-            // 
-            // phone
-            // 
-            this.phone.HeaderText = "Phone";
-            this.phone.MinimumWidth = 200;
-            this.phone.Name = "phone";
-            this.phone.Width = 200;
-            // 
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.White;
@@ -139,28 +119,46 @@ namespace CRM_Semester_work
             this.label5.Text = "Storage";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // company
+            // dataGridView1
             // 
-            this.company.HeaderText = "Company";
-            this.company.MinimumWidth = 200;
-            this.company.Name = "company";
-            this.company.Width = 200;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.name, this.Column1, this.category, this.quantity, this.price });
+            this.dataGridView1.Location = new System.Drawing.Point(0, 144);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(979, 406);
+            this.dataGridView1.TabIndex = 5;
             // 
             // id_client
             // 
             this.id_client.HeaderText = "ID";
             this.id_client.Name = "id_client";
             // 
-            // dataGridView1
+            // name
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.company, this.email, this.contact_person, this.phone });
-            this.dataGridView1.Location = new System.Drawing.Point(0, 144);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(979, 406);
-            this.dataGridView1.TabIndex = 5;
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column1";
+            this.Column1.Name = "Column1";
+            // 
+            // category
+            // 
+            this.category.HeaderText = "Category";
+            this.category.Name = "category";
+            // 
+            // quantity
+            // 
+            this.quantity.HeaderText = "Quantity";
+            this.quantity.Name = "quantity";
+            // 
+            // price
+            // 
+            this.price.HeaderText = "Price";
+            this.price.Name = "price";
             // 
             // button1
             // 
@@ -170,6 +168,7 @@ namespace CRM_Semester_work
             this.button1.TabIndex = 7;
             this.button1.Text = "Add product";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Storage
             // 
@@ -189,16 +188,18 @@ namespace CRM_Semester_work
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price;
+
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contact_person;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phone;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn company;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_client;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;

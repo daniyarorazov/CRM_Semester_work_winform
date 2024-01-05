@@ -93,6 +93,12 @@
     <Compile Include="Storage.Designer.cs">
       <DependentUpon>Storage.cs</DependentUpon>
     </Compile>
+    <Compile Include="StorageModalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StorageModalForm.Designer.cs">
+      <DependentUpon>StorageModalForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Clients.resx">
       <DependentUpon>Clients.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Storage.resx">
       <DependentUpon>Storage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StorageModalForm.resx">
+      <DependentUpon>StorageModalForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
