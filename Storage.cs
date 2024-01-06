@@ -10,18 +10,16 @@ namespace CRM_Semester_work
         public Storage()
         {
             InitializeComponent();
+            this.Load += new System.EventHandler(this.Storage_Load);
         }
         
-        private void Form1_Load(object sender, EventArgs e)
+        private void Storage_Load(object sender, EventArgs e)
         {
             // Загрузить данные из файла Excel в DataGridView
-            LoadDataToDataGridView("db.xlsx", "Clients");
+            LoadDataToDataGridView("db.xlsx", "Storage");
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
         private void label2_Click(object sender, EventArgs e)
         {

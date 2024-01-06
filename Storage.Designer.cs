@@ -38,13 +38,12 @@ namespace CRM_Semester_work
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -117,18 +116,27 @@ namespace CRM_Semester_work
             this.label5.Size = new System.Drawing.Size(130, 45);
             this.label5.TabIndex = 6;
             this.label5.Text = "Storage";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.name, this.Column1, this.category, this.quantity, this.price });
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.name, this.category, this.quantity, this.price });
             this.dataGridView1.Location = new System.Drawing.Point(0, 144);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(979, 406);
             this.dataGridView1.TabIndex = 5;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(136, 98);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(126, 34);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Add product";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // id_client
             // 
@@ -139,11 +147,6 @@ namespace CRM_Semester_work
             // 
             this.name.HeaderText = "Name";
             this.name.Name = "name";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
             // 
             // category
             // 
@@ -159,16 +162,6 @@ namespace CRM_Semester_work
             // 
             this.price.HeaderText = "Price";
             this.price.Name = "price";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(136, 98);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 34);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Add product";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Storage
             // 
@@ -189,7 +182,6 @@ namespace CRM_Semester_work
         }
 
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn category;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;

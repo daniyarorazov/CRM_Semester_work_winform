@@ -32,14 +32,14 @@ namespace CRM_Semester_work
         private void InitializeComponent()
         {
             this.label3 = new System.Windows.Forms.Label();
-            this.phoneCompany = new System.Windows.Forms.TextBox();
+            this.priceProduct = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.nameContactPerson = new System.Windows.Forms.TextBox();
+            this.quantityProduct = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nameCompany = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.nameProduct = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.categoryProduct = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label3
@@ -52,13 +52,13 @@ namespace CRM_Semester_work
             this.label3.TabIndex = 17;
             this.label3.Text = "Price";
             // 
-            // phoneCompany
+            // priceProduct
             // 
-            this.phoneCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.phoneCompany.Location = new System.Drawing.Point(31, 294);
-            this.phoneCompany.Name = "phoneCompany";
-            this.phoneCompany.Size = new System.Drawing.Size(228, 30);
-            this.phoneCompany.TabIndex = 16;
+            this.priceProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.priceProduct.Location = new System.Drawing.Point(31, 294);
+            this.priceProduct.Name = "priceProduct";
+            this.priceProduct.Size = new System.Drawing.Size(228, 30);
+            this.priceProduct.TabIndex = 16;
             // 
             // label2
             // 
@@ -70,13 +70,13 @@ namespace CRM_Semester_work
             this.label2.TabIndex = 15;
             this.label2.Text = "Quantity";
             // 
-            // nameContactPerson
+            // quantityProduct
             // 
-            this.nameContactPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nameContactPerson.Location = new System.Drawing.Point(31, 214);
-            this.nameContactPerson.Name = "nameContactPerson";
-            this.nameContactPerson.Size = new System.Drawing.Size(228, 30);
-            this.nameContactPerson.TabIndex = 14;
+            this.quantityProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.quantityProduct.Location = new System.Drawing.Point(31, 214);
+            this.quantityProduct.Name = "quantityProduct";
+            this.quantityProduct.Size = new System.Drawing.Size(228, 30);
+            this.quantityProduct.TabIndex = 14;
             // 
             // label1
             // 
@@ -97,15 +97,14 @@ namespace CRM_Semester_work
             this.nameCompany.Size = new System.Drawing.Size(204, 34);
             this.nameCompany.TabIndex = 11;
             this.nameCompany.Text = "Name item";
-            this.nameCompany.Click += new System.EventHandler(this.nameCompany_Click);
             // 
-            // textBox1
+            // nameProduct
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(31, 58);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(228, 30);
-            this.textBox1.TabIndex = 10;
+            this.nameProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.nameProduct.Location = new System.Drawing.Point(31, 58);
+            this.nameProduct.Name = "nameProduct";
+            this.nameProduct.Size = new System.Drawing.Size(228, 30);
+            this.nameProduct.TabIndex = 10;
             // 
             // button1
             // 
@@ -118,16 +117,17 @@ namespace CRM_Semester_work
             this.button1.TabIndex = 9;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // comboBox1
+            // categoryProduct
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] { "Category 1", "Category 2", "Category 3" });
-            this.comboBox1.Location = new System.Drawing.Point(31, 136);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(228, 33);
-            this.comboBox1.TabIndex = 18;
+            this.categoryProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.categoryProduct.FormattingEnabled = true;
+            this.categoryProduct.Items.AddRange(new object[] { "Category 1", "Category 2", "Category 3" });
+            this.categoryProduct.Location = new System.Drawing.Point(31, 136);
+            this.categoryProduct.Name = "categoryProduct";
+            this.categoryProduct.Size = new System.Drawing.Size(228, 33);
+            this.categoryProduct.TabIndex = 18;
             // 
             // StorageModalForm
             // 
@@ -135,14 +135,14 @@ namespace CRM_Semester_work
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.categoryProduct);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.phoneCompany);
+            this.Controls.Add(this.priceProduct);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.nameContactPerson);
+            this.Controls.Add(this.quantityProduct);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameCompany);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.nameProduct);
             this.Controls.Add(this.button1);
             this.Name = "StorageModalForm";
             this.Text = "StorageModalForm";
@@ -150,15 +150,15 @@ namespace CRM_Semester_work
             this.PerformLayout();
         }
 
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox categoryProduct;
 
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox phoneCompany;
+        private System.Windows.Forms.TextBox priceProduct;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox nameContactPerson;
+        private System.Windows.Forms.TextBox quantityProduct;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label nameCompany;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox nameProduct;
         private System.Windows.Forms.Button button1;
 
         #endregion
