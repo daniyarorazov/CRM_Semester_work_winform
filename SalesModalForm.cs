@@ -57,6 +57,8 @@ namespace CRM_Semester_work
             nameProduct.SelectedIndexChanged += NameProduct_SelectedIndexChanged;
         }
         
+        
+        
         private void NameProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Получаем выбранный продукт

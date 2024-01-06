@@ -18,9 +18,6 @@ namespace CRM_Semester_work
             // Загрузить данные из файла Excel в DataGridView
             LoadDataToDataGridView("db.xlsx", "Storage");
         }
-
-      
-
         private void label2_Click(object sender, EventArgs e)
         {
             Clients clients = new Clients();

@@ -1,2 +1,4 @@
 ﻿packages
 bin
+obj
+.exe
