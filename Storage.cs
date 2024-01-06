@@ -99,7 +99,6 @@ namespace CRM_Semester_work
             {
                 MessageBox.Show("Database created and test data added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadDataToDataGridView("db.xlsx", "Storage");
-
             }
         }
 

@@ -71,9 +71,5 @@ namespace CRM_Semester_work
                 worksheet.Cells[row, col + 1].Value = values[col];
             }
         }
-        
-        
-      
     }
-
 }

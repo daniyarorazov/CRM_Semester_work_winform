@@ -37,12 +37,13 @@ namespace CRM_Semester_work
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.company = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contact_person = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sumSales = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.company = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateSale = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -117,49 +118,46 @@ namespace CRM_Semester_work
             this.label5.TabIndex = 10;
             this.label5.Text = "Sales";
             // 
-            // company
-            // 
-            this.company.HeaderText = "Company";
-            this.company.MinimumWidth = 200;
-            this.company.Name = "company";
-            this.company.Width = 200;
-            // 
-            // id_client
-            // 
-            this.id_client.HeaderText = "ID";
-            this.id_client.Name = "id_client";
-            // 
             // dataGridView1
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.company, this.email, this.contact_person, this.phone });
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.name, this.sumSales, this.company, this.quantity, this.dateSale });
             this.dataGridView1.Location = new System.Drawing.Point(0, 151);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(979, 406);
             this.dataGridView1.TabIndex = 9;
             // 
-            // email
+            // id_client
             // 
-            this.email.HeaderText = "Email";
-            this.email.MinimumWidth = 200;
-            this.email.Name = "email";
-            this.email.Width = 200;
+            this.id_client.HeaderText = "ID";
+            this.id_client.Name = "id_client";
             // 
-            // contact_person
+            // name
             // 
-            this.contact_person.HeaderText = "Contact Person";
-            this.contact_person.MinimumWidth = 200;
-            this.contact_person.Name = "contact_person";
-            this.contact_person.Width = 200;
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
             // 
-            // phone
+            // sumSales
             // 
-            this.phone.HeaderText = "Phone";
-            this.phone.MinimumWidth = 200;
-            this.phone.Name = "phone";
-            this.phone.Width = 200;
+            this.sumSales.HeaderText = "Sum Sale";
+            this.sumSales.Name = "sumSales";
+            // 
+            // company
+            // 
+            this.company.HeaderText = "Company";
+            this.company.Name = "company";
+            // 
+            // quantity
+            // 
+            this.quantity.HeaderText = "Quantity";
+            this.quantity.Name = "quantity";
+            // 
+            // dateSale
+            // 
+            this.dateSale.HeaderText = "Date of sale";
+            this.dateSale.Name = "dateSale";
             // 
             // button1
             // 
@@ -169,6 +167,7 @@ namespace CRM_Semester_work
             this.button1.TabIndex = 11;
             this.button1.Text = "New sale product";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Sales
             // 
@@ -188,6 +187,12 @@ namespace CRM_Semester_work
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sumSales;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateSale;
+
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -197,9 +202,6 @@ namespace CRM_Semester_work
         private System.Windows.Forms.DataGridViewTextBoxColumn company;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_client;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contact_person;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phone;
         private System.Windows.Forms.Button button1;
 
         #endregion
