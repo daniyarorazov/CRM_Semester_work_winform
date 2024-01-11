@@ -2,7 +2,7 @@
 
 namespace CRM_Semester_work
 {
-    partial class MyModalForm
+    partial class ClientsModalForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace CRM_Semester_work
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.add_item_button = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.nameCompany = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,18 +42,18 @@ namespace CRM_Semester_work
             this.phoneCompany = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // add_item_button
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(120)))), ((int)(((byte)(237)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(30, 378);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(228, 51);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.add_item_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(120)))), ((int)(((byte)(237)))));
+            this.add_item_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_item_button.ForeColor = System.Drawing.Color.White;
+            this.add_item_button.Location = new System.Drawing.Point(30, 378);
+            this.add_item_button.Name = "add_item_button";
+            this.add_item_button.Size = new System.Drawing.Size(228, 51);
+            this.add_item_button.TabIndex = 0;
+            this.add_item_button.Text = "Add";
+            this.add_item_button.UseVisualStyleBackColor = false;
+            this.add_item_button.Click += new System.EventHandler(this.add_item_button_Click);
             // 
             // textBox1
             // 
@@ -127,7 +127,7 @@ namespace CRM_Semester_work
             this.phoneCompany.Size = new System.Drawing.Size(228, 30);
             this.phoneCompany.TabIndex = 7;
             // 
-            // MyModalForm
+            // ClientsModalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,8 +141,8 @@ namespace CRM_Semester_work
             this.Controls.Add(this.emailCompany);
             this.Controls.Add(this.nameCompany);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Name = "MyModalForm";
+            this.Controls.Add(this.add_item_button);
+            this.Name = "ClientsModalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MyModalForm";
             this.ResumeLayout(false);
@@ -159,7 +159,7 @@ namespace CRM_Semester_work
 
         private System.Windows.Forms.Label label1;
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button add_item_button;
         private System.Windows.Forms.TextBox textBox1;
 
         #endregion

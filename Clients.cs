@@ -1,175 +1,162 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using OfficeOpenXml;
 
 namespace CRM_Semester_work
 {
     public partial class Clients : Form
     {
+        private readonly string connectionString = "Data Source=data.db;Version=3;";
+
         public Clients()
         {
             InitializeComponent();
-            CreateOrUpdateDatabase();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Загрузить данные из файла Excel в DataGridView
-            LoadDataToDataGridView("db.xlsx", "Clients");
+            LoadDataToDataGridView();
+            AddButtonColumns();
         }
         
-        private void LoadDataToDataGridView(string fileName, string sheetName)
-        {
-            // Проверить существование файла
-            if (!File.Exists(fileName))
-            {
-                MessageBox.Show("Ошибка: Файл базы данных не найден.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Очистить существующие строки в DataGridView
-            dataGridView1.Rows.Clear();
-
-            FileInfo excelFile = new FileInfo(fileName);
-
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
-            {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[sheetName];
-
-                if (worksheet != null)
-                {
-                    // Получить данные из Excel и добавить их в DataGridView
-                    int rows = worksheet.Dimension.End.Row;
-                    int columns = worksheet.Dimension.End.Column;
-
-                    for (int row = 2; row <= rows; row++)
-                    {
-                        bool isEmptyRow = true;
-                        object[] rowData = new object[columns];
-                
-                        for (int col = 1; col <= columns; col++)
-                        {
-                            rowData[col - 1] = worksheet.Cells[row, col].Text;
-                    
-                            // Проверить, есть ли хотя бы одно пустое значение в строке
-                            if (string.IsNullOrWhiteSpace(worksheet.Cells[row, col].Text))
-                            {
-                                isEmptyRow = true;
-                                break;
-                            }
-                            else
-                            {
-                                isEmptyRow = false;
-                            }
-                        }
-
-                        // Если строка не пустая, добавить данные в DataGridView
-                        if (!isEmptyRow)
-                        {
-                            dataGridView1.Rows.Add(rowData);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void label3_Click_1(object sender, EventArgs e)
+        private void storage_navbar_label_Click(object sender, EventArgs e)
         {
             Storage storage = new Storage();
             storage.Show();
             this.Hide();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        // Click event for navigating to the "Sales" form
+        private void sales_navbar_label_Click(object sender, EventArgs e)
         {
             Sales sales = new Sales();
             sales.Show();
             this.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            MyModalForm modalForm = new MyModalForm();
-    
-            // Если форма закрыта с результатом OK
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["btnDelete"].Index)
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    DeleteRowFromDatabase(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id_client"].Value));
+                }
+            }
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["btnEdit"].Index)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+
+                    string companyName = selectedRow.Cells["Company"].Value.ToString();
+                    string companyEmail = selectedRow.Cells["Email"].Value.ToString();
+                    string companyContactPerson = selectedRow.Cells["contact_person"].Value.ToString();
+                    string companyPhone = selectedRow.Cells["Phone"].Value.ToString();
+                    int clientId = Convert.ToInt32(selectedRow.Cells["id_client"].Value);
+
+                    EditDataClientForm editForm = new EditDataClientForm(clientId, companyName, companyEmail, companyContactPerson, companyPhone);
+                    if (editForm.ShowDialog() == DialogResult.OK)
+                    {
+                        MessageBox.Show("Database edited success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadDataToDataGridView();
+                    }
+                }
+            }
+        }
+
+        private void LoadDataToDataGridView()
+        {
+            dataGridView1.Rows.Clear();
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM Clients;";
+
+                using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            object[] rowData = new object[reader.FieldCount];
+
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                rowData[i] = reader[i];
+                            }
+
+                            dataGridView1.Rows.Add(rowData);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+        }
+
+        private void DeleteRowFromDatabase(int idToDelete)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM Clients WHERE ID = @ID;";
+
+                using (SQLiteCommand command = new SQLiteCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@ID", idToDelete);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Record successfully deleted from the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadDataToDataGridView();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Record with the specified ID not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                connection.Close();
+            }
+        }
+
+        private void AddButtonColumns()
+        {
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "Edit";
+            buttonColumn.Name = "btnEdit";
+            buttonColumn.Text = "Edit";
+            buttonColumn.UseColumnTextForButtonValue = true;
+            dataGridView1.Columns.Add(buttonColumn);
+
+            DataGridViewButtonColumn buttonColumn2 = new DataGridViewButtonColumn();
+            buttonColumn2.HeaderText = "Delete";
+            buttonColumn2.Name = "btnDelete";
+            buttonColumn2.Text = "Delete";
+            buttonColumn2.UseColumnTextForButtonValue = true;
+            dataGridView1.Columns.Add(buttonColumn2);
+        }
+
+        private void add_client_button_Click(object sender, EventArgs e)
+        {
+            ClientsModalForm modalForm = new ClientsModalForm();
+
+            // If the form is closed with the OK result
             if (modalForm.ShowDialog() == DialogResult.OK)
             {
                 MessageBox.Show("Database created and test data added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadDataToDataGridView("db.xlsx", "Clients");
-
-            }
-        }
-
-        private void CreateOrUpdateDatabase()
-        {
-            string fileName = "db.xlsx";
-
-            if (!File.Exists(fileName))
-            {
-                FileInfo excelFile = new FileInfo(fileName);
-
-                using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
-                {
-                    ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Clients");
-
-                    string[] headers = { "ID", "Company", "Email", "Contact Person", "Phone", "Date of last contact", "Registration date" };
-
-                    for (int i = 0; i < headers.Length; i++)
-                    {
-                        worksheet.Cells[1, i + 1].Value = headers[i];
-                    }
-
-                    excelPackage.Save();
-                }
-            }
-
-            AddDataToDatabase(fileName);
-        }
-
-        private void AddDataToDatabase(string fileName)
-        {
-            FileInfo excelFile = new FileInfo(fileName);
-
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
-            {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets["Clients"];
-
-                int nextRow = worksheet.Dimension?.End.Row + 1 ?? 2;
-
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    string[] rowData = {
-                        row.Cells[0].Value?.ToString(),
-                        row.Cells[1].Value?.ToString(),
-                        row.Cells[2].Value?.ToString(),
-                        row.Cells[3].Value?.ToString(),
-                        row.Cells[4].Value?.ToString(),
-                        // Добавьте дополнительные данные согласно вашей структуре данных
-                        DateTime.Now.ToShortDateString(), // Пример для "Date of last contact"
-                        DateTime.Now.ToShortDateString()  // Пример для "Registration date"
-                    };
-
-                    AddRowToWorksheet(worksheet, nextRow, rowData);
-                    nextRow++;
-                }
-
-                excelPackage.Save();
-            }
-        }
-
-        private void AddRowToWorksheet(ExcelWorksheet worksheet, int row, string[] values)
-        {
-            for (int col = 0; col < values.Length; col++)
-            {
-                worksheet.Cells[row, col + 1].Value = values[col];
+                LoadDataToDataGridView();
             }
         }
     }

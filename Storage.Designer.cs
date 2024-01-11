@@ -32,18 +32,18 @@ namespace CRM_Semester_work
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.sales_navbar_label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.clients_navbar_label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.id_client = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.add_product_button = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -51,9 +51,9 @@ namespace CRM_Semester_work
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(120)))), ((int)(((byte)(237)))));
-            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.sales_navbar_label);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.clients_navbar_label);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -61,17 +61,17 @@ namespace CRM_Semester_work
             this.panel1.Size = new System.Drawing.Size(970, 59);
             this.panel1.TabIndex = 4;
             // 
-            // label4
+            // sales_navbar_label
             // 
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(52)))), ((int)(((byte)(139)))));
-            this.label4.Location = new System.Drawing.Point(866, 15);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 32);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Sales";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.sales_navbar_label.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.sales_navbar_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(52)))), ((int)(((byte)(139)))));
+            this.sales_navbar_label.Location = new System.Drawing.Point(866, 15);
+            this.sales_navbar_label.Name = "sales_navbar_label";
+            this.sales_navbar_label.Size = new System.Drawing.Size(100, 32);
+            this.sales_navbar_label.TabIndex = 3;
+            this.sales_navbar_label.Text = "Sales";
+            this.sales_navbar_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.sales_navbar_label.Click += new System.EventHandler(this.sales_navbar_label_Click);
             // 
             // label3
             // 
@@ -84,17 +84,17 @@ namespace CRM_Semester_work
             this.label3.Text = "Storage";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // clients_navbar_label
             // 
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(52)))), ((int)(((byte)(139)))));
-            this.label2.Location = new System.Drawing.Point(654, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 32);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Clients";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.clients_navbar_label.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.clients_navbar_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(52)))), ((int)(((byte)(139)))));
+            this.clients_navbar_label.Location = new System.Drawing.Point(654, 15);
+            this.clients_navbar_label.Name = "clients_navbar_label";
+            this.clients_navbar_label.Size = new System.Drawing.Size(100, 32);
+            this.clients_navbar_label.TabIndex = 1;
+            this.clients_navbar_label.Text = "Clients";
+            this.clients_navbar_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.clients_navbar_label.Click += new System.EventHandler(this.clients_navbar_label_Click);
             // 
             // label1
             // 
@@ -127,16 +127,7 @@ namespace CRM_Semester_work
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(979, 406);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(136, 98);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 34);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Add product";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
             // id_client
             // 
@@ -163,6 +154,16 @@ namespace CRM_Semester_work
             this.price.HeaderText = "Price";
             this.price.Name = "price";
             // 
+            // add_product_button
+            // 
+            this.add_product_button.Location = new System.Drawing.Point(136, 98);
+            this.add_product_button.Name = "add_product_button";
+            this.add_product_button.Size = new System.Drawing.Size(126, 34);
+            this.add_product_button.TabIndex = 7;
+            this.add_product_button.Text = "Add product";
+            this.add_product_button.UseVisualStyleBackColor = true;
+            this.add_product_button.Click += new System.EventHandler(this.add_product_button_Click);
+            // 
             // Storage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -172,7 +173,7 @@ namespace CRM_Semester_work
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.add_product_button);
             this.Name = "Storage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Storage";
@@ -187,14 +188,14 @@ namespace CRM_Semester_work
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label sales_navbar_label;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label clients_navbar_label;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_client;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button add_product_button;
 
         #endregion
     }

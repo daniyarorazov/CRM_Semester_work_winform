@@ -1,74 +1,56 @@
 ﻿using System;
-using System.IO;
+using System.Data.SQLite;
 using System.Windows.Forms;
-using OfficeOpenXml;
 
 namespace CRM_Semester_work
 {
     public partial class Sales : Form
     {
-        string dbPath = "db.xlsx";
+        // Path to the SQLite database file
+        string dbPath = "data.db";
+
+        // Constructor for the Sales form
         public Sales()
         {
             InitializeComponent();
+
+            // Load data into the DataGridView on form initialization
             LoadDataToDataGridView(dbPath, "Sales");
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        // Event handler for clicking on the "Clients" navigation label
+        private void clients_navbar_label_Click(object sender, EventArgs e)
         {
+            // Show the Clients form and hide the current form
             Clients clients = new Clients();
             clients.Show();
             this.Hide();
         }
-        
-         private void LoadDataToDataGridView(string fileName, string sheetName)
+
+        // Method to load data into the DataGridView from an SQLite database
+        private void LoadDataToDataGridView(string databasePath, string tableName)
         {
-            // Проверить существование файла
-            if (!File.Exists(fileName))
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                MessageBox.Show("Ошибка: Файл базы данных не найден.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                connection.Open();
 
-            // Очистить существующие строки в DataGridView
-            dataGridView1.Rows.Clear();
+                // Clear existing rows in the DataGridView
+                dataGridView1.Rows.Clear();
 
-            FileInfo excelFile = new FileInfo(fileName);
-
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
-            {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[sheetName];
-
-                if (worksheet != null)
+                // Execute a SELECT query to retrieve data from the SQLite database
+                string query = $"SELECT * FROM {tableName}";
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
-                    // Получить данные из Excel и добавить их в DataGridView
-                    int rows = worksheet.Dimension.End.Row;
-                    int columns = worksheet.Dimension.End.Column;
-
-                    for (int row = 2; row <= rows; row++)
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        bool isEmptyRow = true;
-                        object[] rowData = new object[columns];
-                
-                        for (int col = 1; col <= columns; col++)
+                        while (reader.Read())
                         {
-                            rowData[col - 1] = worksheet.Cells[row, col].Text;
-                    
-                            // Проверить, есть ли хотя бы одно пустое значение в строке
-                            if (string.IsNullOrWhiteSpace(worksheet.Cells[row, col].Text))
-                            {
-                                isEmptyRow = true;
-                                break;
-                            }
-                            else
-                            {
-                                isEmptyRow = false;
-                            }
-                        }
+                            // Get data from SQLiteDataReader and add it to the DataGridView
+                            object[] rowData = new object[reader.FieldCount];
+                            reader.GetValues(rowData);
 
-                        // Если строка не пустая, добавить данные в DataGridView
-                        if (!isEmptyRow)
-                        {
                             dataGridView1.Rows.Add(rowData);
                         }
                     }
@@ -76,25 +58,27 @@ namespace CRM_Semester_work
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        // Event handler for clicking on the "Storage" navigation label
+        private void storage_navbar_label_Click(object sender, EventArgs e)
         {
+            // Show the Storage form and hide the current form
             Storage storage = new Storage();
             storage.Show();
             this.Hide();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        // Event handler for clicking on the "Add Sale" button
+        private void add_sale_button_Click_1(object sender, EventArgs e)
         {
+            // Show the SalesModalForm for adding a new sale
             SalesModalForm modalForm = new SalesModalForm();
-            // Если форма закрыта с результатом OK
+
+            // If the form is closed with the OK result
             if (modalForm.ShowDialog() == DialogResult.OK)
             {
                 MessageBox.Show("Database created and test data added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadDataToDataGridView("db.xlsx", "Sales");
-
+                LoadDataToDataGridView(dbPath, "Sales");
             }
         }
-
-      
     }
 }

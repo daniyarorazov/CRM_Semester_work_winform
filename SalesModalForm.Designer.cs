@@ -35,7 +35,7 @@ namespace CRM_Semester_work
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.nameCompany = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.add_sale_button = new System.Windows.Forms.Button();
             this.companyName = new System.Windows.Forms.ComboBox();
             this.nameProduct = new System.Windows.Forms.ComboBox();
             this.quantityProduct = new System.Windows.Forms.NumericUpDown();
@@ -84,18 +84,18 @@ namespace CRM_Semester_work
             this.nameCompany.TabIndex = 11;
             this.nameCompany.Text = "Name Product";
             // 
-            // button1
+            // add_sale_button
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(120)))), ((int)(((byte)(237)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(40, 371);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(228, 51);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.add_sale_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(120)))), ((int)(((byte)(237)))));
+            this.add_sale_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add_sale_button.ForeColor = System.Drawing.Color.White;
+            this.add_sale_button.Location = new System.Drawing.Point(40, 371);
+            this.add_sale_button.Name = "add_sale_button";
+            this.add_sale_button.Size = new System.Drawing.Size(228, 51);
+            this.add_sale_button.TabIndex = 9;
+            this.add_sale_button.Text = "Add";
+            this.add_sale_button.UseVisualStyleBackColor = false;
+            this.add_sale_button.Click += new System.EventHandler(this.add_sale_button_Click);
             // 
             // companyName
             // 
@@ -145,7 +145,7 @@ namespace CRM_Semester_work
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nameCompany);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.add_sale_button);
             this.Name = "SalesModalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SalesModalForm";
@@ -168,7 +168,7 @@ namespace CRM_Semester_work
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label nameCompany;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button add_sale_button;
 
         #endregion
     }

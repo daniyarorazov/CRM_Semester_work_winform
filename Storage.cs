@@ -1,85 +1,74 @@
 ﻿using System;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
-using OfficeOpenXml;
 
 namespace CRM_Semester_work
 {
     public partial class Storage : Form
     {
+        // Path to the SQLite database file
+        string dbPath = "data.db";
+
         public Storage()
         {
             InitializeComponent();
+            AddButtonColumns();
             this.Load += new System.EventHandler(this.Storage_Load);
         }
-        
+
+        // Event handler for the form's Load event
         private void Storage_Load(object sender, EventArgs e)
         {
-            // Загрузить данные из файла Excel в DataGridView
-            LoadDataToDataGridView("db.xlsx", "Storage");
+            // Load data from the SQLite database into the DataGridView
+            LoadDataToDataGridView(dbPath, "Storage");
         }
-        private void label2_Click(object sender, EventArgs e)
+
+        // Event handler for clicking on the "Clients" navigation label
+        private void clients_navbar_label_Click(object sender, EventArgs e)
         {
+            // Show the Clients form and hide the current form
             Clients clients = new Clients();
             clients.Show();
             this.Hide();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        // Event handler for clicking on the "Sales" navigation label
+        private void sales_navbar_label_Click(object sender, EventArgs e)
         {
+            // Show the Sales form and hide the current form
             Sales sales = new Sales();
             sales.Show();
             this.Hide();
         }
-        
-        private void LoadDataToDataGridView(string fileName, string sheetName)
+
+        // Method to load data into the DataGridView from an SQLite database
+        private void LoadDataToDataGridView(string databasePath, string tableName)
         {
-            // Проверить существование файла
-            if (!File.Exists(fileName))
+            // Check if the file exists
+            if (!File.Exists(databasePath))
             {
-                MessageBox.Show("Ошибка: Файл базы данных не найден.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Database file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Очистить существующие строки в DataGridView
+            // Clear existing rows in the DataGridView
             dataGridView1.Rows.Clear();
 
-            FileInfo excelFile = new FileInfo(fileName);
-
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
+            string connectionString = $"Data Source={databasePath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[sheetName];
+                connection.Open();
 
-                if (worksheet != null)
+                // Load data into the DataGridView
+                using (SQLiteCommand command = new SQLiteCommand($"SELECT * FROM {tableName}", connection))
                 {
-                    // Получить данные из Excel и добавить их в DataGridView
-                    int rows = worksheet.Dimension.End.Row;
-                    int columns = worksheet.Dimension.End.Column;
-
-                    for (int row = 2; row <= rows; row++)
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        bool isEmptyRow = true;
-                        object[] rowData = new object[columns];
-                
-                        for (int col = 1; col <= columns; col++)
+                        while (reader.Read())
                         {
-                            rowData[col - 1] = worksheet.Cells[row, col].Text;
-                    
-                            // Проверить, есть ли хотя бы одно пустое значение в строке
-                            if (string.IsNullOrWhiteSpace(worksheet.Cells[row, col].Text))
-                            {
-                                isEmptyRow = true;
-                                break;
-                            }
-                            else
-                            {
-                                isEmptyRow = false;
-                            }
-                        }
-
-                        // Если строка не пустая, добавить данные в DataGridView
-                        if (!isEmptyRow)
-                        {
+                            object[] rowData = new object[reader.FieldCount];
+                            reader.GetValues(rowData);
                             dataGridView1.Rows.Add(rowData);
                         }
                     }
@@ -87,21 +76,94 @@ namespace CRM_Semester_work
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // Event handler for clicking on the "Add Product" button
+        private void add_product_button_Click(object sender, EventArgs e)
         {
+            // Show the StorageModalForm for adding a new product
             StorageModalForm modalForm = new StorageModalForm();
-    
-            // Если форма закрыта с результатом OK
+
+            // If the form is closed with the OK result
             if (modalForm.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Database created and test data added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadDataToDataGridView("db.xlsx", "Storage");
+                MessageBox.Show("Added new product", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadDataToDataGridView(dbPath, "Storage");
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Event handler for clicking on the "Edit Product" button
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            throw new System.NotImplementedException();
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["btnDelete"].Index)
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Extract the ID for deletion
+                    int productId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id_client"].Value);
+                    DeleteProductFromDatabase(productId);
+                    LoadDataToDataGridView(dbPath, "Storage");
+                }
+            }
+
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["btnEdit"].Index)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    int rowIndex = e.RowIndex;
+
+                    // Extract data for editing
+                    string name = dataGridView1.Rows[rowIndex].Cells["Name"].Value.ToString();
+                    string category = dataGridView1.Rows[rowIndex].Cells["Category"].Value.ToString();
+                    string quantity = dataGridView1.Rows[rowIndex].Cells["Quantity"].Value.ToString();
+                    string price = dataGridView1.Rows[rowIndex].Cells["Price"].Value.ToString();
+                    int productId = Convert.ToInt32(dataGridView1.Rows[rowIndex].Cells["id_client"].Value);
+
+                    // Show the EditStorageModalForm for editing the product
+                    EditStorageModalForm modalForm = new EditStorageModalForm(productId, name, category, quantity, price);
+
+                    // If the form is closed with the OK result
+                    if (modalForm.ShowDialog() == DialogResult.OK)
+                    {
+                        MessageBox.Show("Product updated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadDataToDataGridView(dbPath, "Storage");
+                    }
+                }
+            }
+        }
+
+
+        // Method to delete a product from the database
+        private void DeleteProductFromDatabase(int productId)
+        {
+            string connectionString = $"Data Source={dbPath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                // Delete the product with the specified ID
+                using (SQLiteCommand command = new SQLiteCommand("DELETE FROM Storage WHERE ID = @ID", connection))
+                {
+                    command.Parameters.AddWithValue("@ID", productId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        private void AddButtonColumns()
+        {
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            buttonColumn.HeaderText = "Edit";
+            buttonColumn.Name = "btnEdit";
+            buttonColumn.Text = "Edit";
+            buttonColumn.UseColumnTextForButtonValue = true;
+            dataGridView1.Columns.Add(buttonColumn);
+
+            DataGridViewButtonColumn buttonColumn2 = new DataGridViewButtonColumn();
+            buttonColumn2.HeaderText = "Delete";
+            buttonColumn2.Name = "btnDelete";
+            buttonColumn2.Text = "Delete";
+            buttonColumn2.UseColumnTextForButtonValue = true;
+            dataGridView1.Columns.Add(buttonColumn2);
         }
     }
 }

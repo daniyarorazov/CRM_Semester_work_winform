@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
-using OfficeOpenXml;
 
 namespace CRM_Semester_work
 {
@@ -12,144 +12,147 @@ namespace CRM_Semester_work
             InitializeComponent();
             this.Load += new System.EventHandler(this.Form1_Load);
         }
-        
-        private void LoadDataFromExcel()
+
+        // Method to load data into ComboBoxes from the SQLite database
+        private void LoadDataFromSQLite()
         {
-            // Путь к файлу Excel
-            string excelFilePath = "db.xlsx";
+            // Path to the SQLite database file
+            string sqliteDbPath = "data.db";
 
-            using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(excelFilePath)))
+            string connectionString = $"Data Source={sqliteDbPath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                // Получение объекта рабочего листа
-                ExcelWorksheet storage_worksheet = package.Workbook.Worksheets["Storage"];
-                ExcelWorksheet clients_worksheet = package.Workbook.Worksheets["Clients"];
+                connection.Open();
 
-                // Предполагаем, что данные находятся в колонке B, начиная с первой строки
-                int row = 2;
+                // Clear existing items in ComboBoxes
+                nameProduct.Items.Clear();
+                companyName.Items.Clear();
 
-                while (storage_worksheet.Cells[row, 2].Value != null) // Изменил индекс колонки на 2
+                // Load data into the nameProduct ComboBox
+                using (SQLiteCommand command = new SQLiteCommand("SELECT ProductName FROM Storage", connection))
                 {
-                    // Добавление элементов в ComboBox программно
-                    nameProduct.Items.Add(storage_worksheet.Cells[row, 2].Text); // Изменил индекс колонки на 2
-
-                    // Переход к следующей строке
-                    row++;
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            nameProduct.Items.Add(reader["ProductName"].ToString());
+                        }
+                    }
                 }
-                
-                while (clients_worksheet.Cells[row, 2].Value != null) // Изменил индекс колонки на 2
-                {
-                    // Добавление элементов в ComboBox программно
-                    companyName.Items.Add(clients_worksheet.Cells[row, 2].Text); // Изменил индекс колонки на 2
 
-                    // Переход к следующей строке
-                    row++;
+                // Load data into the companyName ComboBox
+                using (SQLiteCommand command = new SQLiteCommand("SELECT Company FROM Clients", connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            companyName.Items.Add(reader["Company"].ToString());
+                        }
+                    }
                 }
             }
         }
-        
+
+        // Event handler for the form's Load event
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Добавление элементов в ComboBox программно
-           
-            LoadDataFromExcel();
+            // Load data into ComboBoxes and set maximum value for salesAmount
+            LoadDataFromSQLite();
             salesAmount.Maximum = 100000000;
-            
+
+            // Attach event handler for the selected index change of nameProduct ComboBox
             nameProduct.SelectedIndexChanged += NameProduct_SelectedIndexChanged;
         }
-        
-        
-        
+
+        // Event handler for the selected index change of nameProduct ComboBox
         private void NameProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Получаем выбранный продукт
+            // Get the selected product
             string selectedProduct = nameProduct.SelectedItem?.ToString();
 
-            // Если продукт выбран, устанавливаем соответствующее максимальное значение для quantityProduct
+            // If a product is selected, set the maximum value for quantityProduct
             if (!string.IsNullOrEmpty(selectedProduct))
             {
                 SetMaxQuantityForProduct(selectedProduct);
             }
         }
 
+        // Method to set the maximum quantity for a selected product
         private void SetMaxQuantityForProduct(string productName)
         {
-            // Путь к файлу Excel
-            string excelFilePath = "db.xlsx";
+            // Path to the SQLite database file
+            string sqliteDbPath = "data.db";
 
-            using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(excelFilePath)))
+            string connectionString = $"Data Source={sqliteDbPath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                // Получение объекта рабочего листа
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["Storage"];
+                connection.Open();
 
-                // Ищем продукт в листе "Storage" и получаем его количество
-                int row = 2;
-                while (worksheet.Cells[row, 2].Value != null) // Изменил индекс колонки на 2
+                // Search for the product in the "Storage" table and get its quantity
+                using (SQLiteCommand command = new SQLiteCommand($"SELECT Quantity FROM Storage WHERE ProductName = '{productName}'", connection))
                 {
-                    if (worksheet.Cells[row, 2].Text == productName) // Изменил индекс колонки на 2
+                    object result = command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int quantity))
                     {
-                        // Нашли продукт, устанавливаем максимальное значение для quantityProduct
-                        int quantity = Convert.ToInt32(worksheet.Cells[row, 4].Text); // Предполагается, что количество находится в колонке C
+                        // Found the product, set the maximum value for quantityProduct
                         quantityProduct.Maximum = quantity;
                         return;
                     }
-
-                    row++;
                 }
 
-                // Если продукт не найден, устанавливаем фиксированное максимальное значение
+                // If the product is not found, set a fixed maximum value
                 quantityProduct.Maximum = 200;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // Event handler for the button click to add a new sale
+        private void add_sale_button_Click(object sender, EventArgs e)
         {
+            // Get values from the input fields
             string name = nameProduct.Text;
             string company = companyName.Text;
             string quantity = quantityProduct.Text;
             string price = salesAmount.Text;
-            
-            if (name == null || company == null || quantity == null || price == null)
+
+            // Check if any of the required fields are empty
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(company) || string.IsNullOrEmpty(quantity) || string.IsNullOrEmpty(price))
             {
-                MessageBox.Show("Заполните все поля!");
+                MessageBox.Show("Fill in all fields!");
                 return;
             }
-            
-            string fileName = "db.xlsx";
-            
-            AddDataToExcel(fileName, name, company, quantity, price);
+
+            // Filename for the SQLite database
+            string sqliteDbPath = "data.db";
+
+            // Add data to the SQLite database
+            AddDataToSQLite(sqliteDbPath, name, company, quantity, price);
+
+            // Close the modal form with the OK result
             DialogResult = DialogResult.OK;
         }
-        private void AddDataToExcel(string fileName, string name, string company, string quantity, string price)
+
+        // Method to add data to the SQLite database
+        private void AddDataToSQLite(string databasePath, string name, string company, string quantity, string price)
         {
-            // Проверяем существование файла
-            if (!File.Exists(fileName))
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                MessageBox.Show("Ошибка: Файл базы данных не найден.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                connection.Open();
 
-            FileInfo excelFile = new FileInfo(fileName);
+                // Execute an INSERT query to add data to the "Sales" table
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO Sales (ProductName, Price, CompanyName, Quantity, SaleDate) VALUES (@Name, @Price, @Company, @Quantity, @Date)", connection))
+                {
+                    command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Price", price);
+                    command.Parameters.AddWithValue("@Company", company);
+                    command.Parameters.AddWithValue("@Quantity", quantity);
+                    command.Parameters.AddWithValue("@Date", DateTime.Now.ToShortDateString());
 
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
-            {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets["Sales"];
-
-                // Определяем следующую строку для добавления данных
-                int nextRow = worksheet.Dimension?.End.Row + 1 ?? 2;
-
-                // Пример добавления данных
-                AddRowToWorksheet(worksheet, nextRow, nextRow - 1, name, price, company, quantity, DateTime.Now.ToShortDateString());
-
-                // Сохраняем изменения в файле Excel
-                excelPackage.Save();
-            }
-        }
-
-        private void AddRowToWorksheet(ExcelWorksheet worksheet, int row, params object[] values)
-        {
-            for (int col = 0; col < values.Length; col++)
-            {
-                worksheet.Cells[row, col + 1].Value = values[col];
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }

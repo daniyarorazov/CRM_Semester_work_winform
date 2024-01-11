@@ -1,70 +1,69 @@
 ﻿using System;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
-using OfficeOpenXml;
 
 namespace CRM_Semester_work
 {
     public partial class StorageModalForm : Form
     {
+        // Path to the SQLite database file
+        string dbPath = "data.db";
+
         public StorageModalForm()
         {
             InitializeComponent();
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
+        // Event handler for the "Add Product" button click
+        private void add_product_button_Click(object sender, EventArgs e)
         {
+            // Get values from the input fields
             string name = nameProduct.Text;
             string category = categoryProduct.Text;
             string quantity = quantityProduct.Text;
             string price = priceProduct.Text;
-            
-            if (nameProduct == null || categoryProduct == null || quantityProduct == null || priceProduct == null)
+
+            // Check if any of the required fields are empty
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category) || string.IsNullOrEmpty(quantity) || string.IsNullOrEmpty(price))
             {
-                MessageBox.Show("Заполните все поля!");
+                MessageBox.Show("Fill in all fields!");
                 return;
             }
-            
-            string fileName = "db.xlsx";
-            
-            AddDataToExcel(fileName, name, category, quantity, price);
 
-            // Закрываем модальное окно с результатом OK
+            // Add data to the SQLite database
+            AddDataToSQLite(name, category, quantity, price);
+
+            // Close the modal window with the OK result
             DialogResult = DialogResult.OK;
         }
-        
-        private void AddDataToExcel(string fileName, string name, string category, string quantity, string price)
+
+        // Method to add data to the SQLite database
+        private void AddDataToSQLite(string name, string category, string quantity, string price)
         {
-            // Проверяем существование файла
-            if (!File.Exists(fileName))
+            // Check if the file exists
+            if (!File.Exists(dbPath))
             {
-                MessageBox.Show("Ошибка: Файл базы данных не найден.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Database file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            FileInfo excelFile = new FileInfo(fileName);
-
-            using (ExcelPackage excelPackage = new ExcelPackage(excelFile))
+            string connectionString = $"Data Source={dbPath};Version=3;";
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets["Storage"];
+                connection.Open();
 
-                // Определяем следующую строку для добавления данных
-                int nextRow = worksheet.Dimension?.End.Row + 1 ?? 2;
+                // Insert data into the Storage table
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO Storage (ProductName, Category, Quantity, Price, DateAdded) VALUES (@Name, @Category, @Quantity, @Price, @DateAdded)", connection))
+                {
+                    command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Category", category);
+                    command.Parameters.AddWithValue("@Quantity", int.Parse(quantity));
+                    command.Parameters.AddWithValue("@Price", decimal.Parse(price));
+                    command.Parameters.AddWithValue("@DateAdded", DateTime.Now.ToShortDateString());
 
-                // Пример добавления данных
-                AddRowToWorksheet(worksheet, nextRow, nextRow - 1, name, category, quantity, price, DateTime.Now.ToShortDateString());
-
-                // Сохраняем изменения в файле Excel
-                excelPackage.Save();
-            }
-        }
-
-        private void AddRowToWorksheet(ExcelWorksheet worksheet, int row, params object[] values)
-        {
-            for (int col = 0; col < values.Length; col++)
-            {
-                worksheet.Cells[row, col + 1].Value = values[col];
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }
