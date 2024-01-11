@@ -16,43 +16,43 @@ namespace CRM_Semester_work
         [STAThread]
         static void Main()
         {
-            // Задайте путь к файлу базы данных SQLite
+            // Set the path to the SQLite database file
             string dbFilePath = "data.db";
 
-            // Создайте строку подключения
+            // Create the connection string
             string connectionString = $"Data Source={dbFilePath};Version=3;";
 
-            // Создайте и откройте подключение к базе данных
+            // Create and open a connection to the database
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    Console.WriteLine("Успешное подключение к базе данных SQLite.");
+                    Console.WriteLine("Successfully connected to the SQLite database.");
 
-                    // Создайте таблицу (если она не существует)
+                    // Create the table (if it does not exist)
                     CreateTable(connection);
 
-                    // Выполните другие операции с базой данных здесь
+                    // Perform other database operations here
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Ошибка при подключении к базе данных: {ex.Message}");
+                    Console.WriteLine($"Error connecting to the database: {ex.Message}");
                 }
             }
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Clients());
-            
-            
         }
+
+        // Method to create tables in the database
         static void CreateTable(SQLiteConnection connection)
         {
             using (SQLiteCommand command = new SQLiteCommand(connection))
             {
-                // SQL-запрос для создания таблицы (пример с таблицей Clients)
+                // SQL query to create tables (example with the 'Clients' table)
                 string createTablesQuery = @"
                 CREATE TABLE IF NOT EXISTS Clients (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -81,18 +81,17 @@ namespace CRM_Semester_work
                     Price REAL,
                     SaleDate TEXT
                 );";
-                
 
                 command.CommandText = createTablesQuery;
 
                 try
                 {
                     command.ExecuteNonQuery();
-                    Console.WriteLine("Таблица 'Clients' успешно создана (если не существует).");
+                    Console.WriteLine("Table 'Clients' successfully created (if not exists).");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Ошибка при создании таблицы: {ex.Message}");
+                    Console.WriteLine($"Error creating table: {ex.Message}");
                 }
             }
         }

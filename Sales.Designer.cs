@@ -123,7 +123,7 @@ namespace CRM_Semester_work
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.id_client, this.name, this.sumSales, this.company, this.quantity, this.dateSale });
-            this.dataGridView1.Location = new System.Drawing.Point(0, 151);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 147);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(979, 406);
@@ -148,6 +148,8 @@ namespace CRM_Semester_work
             // 
             this.company.HeaderText = "Company";
             this.company.Name = "company";
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
+
             // 
             // quantity
             // 

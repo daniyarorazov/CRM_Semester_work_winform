@@ -57,6 +57,7 @@ namespace CRM_Semester_work
             // 
             this.priceProduct.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.priceProduct.Location = new System.Drawing.Point(22, 294);
+            this.priceProduct.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             this.priceProduct.Name = "priceProduct";
             this.priceProduct.Size = new System.Drawing.Size(228, 34);
             this.priceProduct.TabIndex = 31;

@@ -16,14 +16,14 @@ namespace CRM_Semester_work
         {
             InitializeComponent();
 
-            // Заполнение элементов управления значениями переданными из DataGridViewRow
+            // Fill the control values with the data passed from the DataGridViewRow
             originalProductName = productName;
             originalCategory = category;
             originalProductAmount = productAmount;
             originalProductPrice = productPrice;
             originalProductId = productId;
 
-            // Устанавливаем значения в элементы управления
+            // Set values in the controls
             nameProduct.Text = productName;
             categoryProduct.Text = category;
             quantityProduct.Text = productAmount;
@@ -33,20 +33,20 @@ namespace CRM_Semester_work
         // Event handler for the "Save Changes" button click
         private void add_product_button_Click(object sender, EventArgs e)
         {
-            // Получаем измененные значения из элементов управления
+            // Get the modified values from the controls
             string editedName = nameProduct.Text;
             string editedCategory = categoryProduct.Text;
             string editedQuantity = quantityProduct.Text;
             string editedPrice = priceProduct.Text;
             int id = originalProductId;
 
-            // Проверяем, были ли внесены изменения
+            // Check if any changes were made
             if (ValuesChanged(editedName, editedCategory, editedQuantity, editedPrice))
             {
-                // Если есть изменения, вызываем метод для сохранения изменений
+                // If there are changes, call the method to save the changes
                 SaveChangesToDatabase(id, editedName, editedCategory, editedQuantity, editedPrice);
 
-                DialogResult = DialogResult.OK; // Закрываем форму с результатом OK
+                DialogResult = DialogResult.OK; // Close the form with the OK result
             }
             else
             {
@@ -54,7 +54,7 @@ namespace CRM_Semester_work
             }
         }
 
-        // Метод для проверки, были ли внесены изменения
+        // Method to check if any changes were made
         private bool ValuesChanged(string editedName, string editedCategory, string editedQuantity, string editedPrice)
         {
             return !string.Equals(originalProductName, editedName) ||
@@ -63,18 +63,18 @@ namespace CRM_Semester_work
                    !string.Equals(originalProductPrice, editedPrice);
         }
 
-        // Метод для сохранения изменений в базе данных
+        // Method to save changes to the database
         private void SaveChangesToDatabase(int OriginalID, string editedName, string editedCategory, string editedQuantity, string editedPrice)
         {
-            // Подключаемся к базе данных
+            // Connect to the database
             string dbPath = "data.db";
             string connectionString = $"Data Source={dbPath};Version=3;";
-            
+
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
-                // Используем SQL-запрос для обновления данных в базе
+                // Use an SQL query to update data in the database
                 string updateQuery =
                     "UPDATE Storage SET ProductName = @Name, Category = @Category, Quantity = @Quantity, Price = @Price " +
                     "WHERE  ID = @OriginalID;";
@@ -86,10 +86,10 @@ namespace CRM_Semester_work
                     command.Parameters.AddWithValue("@Quantity", editedQuantity);
                     command.Parameters.AddWithValue("@Price", editedPrice);
 
-                    // Параметры для условия WHERE
+                    // Parameters for the WHERE condition
                     command.Parameters.AddWithValue("@OriginalID", OriginalID);
-        
-                    // Выполняем запрос
+
+                    // Execute the query
                     command.ExecuteNonQuery();
                 }
             }

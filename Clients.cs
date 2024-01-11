@@ -17,10 +17,12 @@ namespace CRM_Semester_work
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Load data into the DataGridView and add button columns on form initialization
             LoadDataToDataGridView();
             AddButtonColumns();
         }
-        
+
+        // Click event for navigating to the "Storage" form
         private void storage_navbar_label_Click(object sender, EventArgs e)
         {
             Storage storage = new Storage();
@@ -36,14 +38,17 @@ namespace CRM_Semester_work
             this.Hide();
         }
 
+        // Event handler for cell content click in the DataGridView
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["btnDelete"].Index)
             {
+                // Prompt user for confirmation before deleting a record
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this record?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
+                    // Delete the selected row from the database
                     DeleteRowFromDatabase(Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id_client"].Value));
                 }
             }
@@ -52,15 +57,18 @@ namespace CRM_Semester_work
             {
                 if (e.RowIndex >= 0)
                 {
+                    // Get data from the selected row for editing
                     DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-
                     string companyName = selectedRow.Cells["Company"].Value.ToString();
                     string companyEmail = selectedRow.Cells["Email"].Value.ToString();
                     string companyContactPerson = selectedRow.Cells["contact_person"].Value.ToString();
                     string companyPhone = selectedRow.Cells["Phone"].Value.ToString();
                     int clientId = Convert.ToInt32(selectedRow.Cells["id_client"].Value);
 
+                    // Show the EditDataClientForm for editing the client data
                     EditDataClientForm editForm = new EditDataClientForm(clientId, companyName, companyEmail, companyContactPerson, companyPhone);
+
+                    // If the form is closed with the OK result
                     if (editForm.ShowDialog() == DialogResult.OK)
                     {
                         MessageBox.Show("Database edited success!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -70,6 +78,7 @@ namespace CRM_Semester_work
             }
         }
 
+        // Method to load data into the DataGridView from the Clients table
         private void LoadDataToDataGridView()
         {
             dataGridView1.Rows.Clear();
@@ -102,6 +111,7 @@ namespace CRM_Semester_work
             }
         }
 
+        // Method to delete a row from the Clients table in the database
         private void DeleteRowFromDatabase(int idToDelete)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -131,6 +141,7 @@ namespace CRM_Semester_work
             }
         }
 
+        // Method to add "Edit" and "Delete" button columns to the DataGridView
         private void AddButtonColumns()
         {
             DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
@@ -148,8 +159,10 @@ namespace CRM_Semester_work
             dataGridView1.Columns.Add(buttonColumn2);
         }
 
+        // Click event for adding a new client
         private void add_client_button_Click(object sender, EventArgs e)
         {
+            // Show the ClientsModalForm for adding a new client
             ClientsModalForm modalForm = new ClientsModalForm();
 
             // If the form is closed with the OK result

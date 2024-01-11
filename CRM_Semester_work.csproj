@@ -101,6 +101,12 @@
     <Compile Include="EditDataClientForm.Designer.cs">
       <DependentUpon>EditDataClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditSalesModalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditSalesModalForm.Designer.cs">
+      <DependentUpon>EditSalesModalForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditStorageModalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditDataClientForm.resx">
       <DependentUpon>EditDataClientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditSalesModalForm.resx">
+      <DependentUpon>EditSalesModalForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditStorageModalForm.resx">
       <DependentUpon>EditStorageModalForm.cs</DependentUpon>
